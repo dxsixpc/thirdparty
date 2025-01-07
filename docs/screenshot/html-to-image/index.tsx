@@ -1,4 +1,4 @@
-import { toSvg } from '@zpcscc/thirdparty';
+import { toPng } from '@zpcscc/thirdparty';
 import { Button, Image, Space } from 'antd';
 import { useState, type FC } from 'react';
 
@@ -8,7 +8,7 @@ const App: FC = () => {
 
   // 截屏
   const onScreenshot = async () => {
-    const url = await toSvg(document.body, {
+    const url = await toPng(document.body, {
       pixelRatio: 2,
       skipFonts: true,
       drawImageInterval: 0
