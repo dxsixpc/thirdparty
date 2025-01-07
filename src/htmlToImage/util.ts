@@ -9,7 +9,7 @@ export const resolveUrl = (url: string, baseUrl: string | null): string => {
 
   // url is absolute already, without protocol
   if (/^\/\//.test(url)) {
-    return window.location.protocol + url;
+    return globalThis.location.protocol + url;
   }
 
   // dataURI, mailto:, tel:, etc.
@@ -67,7 +67,7 @@ export const toArray = <T>(arrayLike: any): T[] => {
 };
 
 const px = (node: HTMLElement, styleProperty: string) => {
-  const win = node.ownerDocument.defaultView || window;
+  const win = node.ownerDocument.defaultView || globalThis;
   const val = win.getComputedStyle(node).getPropertyValue(styleProperty);
   return val ? Number.parseFloat(val.replace('px', '')) : 0;
 };
@@ -121,7 +121,7 @@ export const canvasToBlob = (
   }
 
   return new Promise((resolve) => {
-    const binaryString = window.atob(
+    const binaryString = globalThis.atob(
       canvas.toDataURL(options.type ?? undefined, options.quality ?? undefined).split(',')[1]
     );
     const len = binaryString.length;
@@ -141,13 +141,28 @@ export const canvasToBlob = (
 
 export const createImage = (url: string): Promise<HTMLImageElement> => {
   return new Promise((resolve, reject) => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     const img = new Image();
-    img.addEventListener('load', () => resolve(img));
-    img.addEventListener('error', reject);
+    img.addEventListener('load', () => {
+      svg.remove();
+      if (globalThis && globalThis.requestAnimationFrame) {
+        globalThis.requestAnimationFrame(() => {
+          resolve(img);
+        });
+      } else {
+        resolve(img);
+      }
+    });
+    img.addEventListener('error', (error) => {
+      svg.remove();
+      reject(error);
+    });
+    svg.append(img);
     img.crossOrigin = 'anonymous';
     img.decoding = 'sync';
     img.loading = 'eager';
     img.src = url;
+    document.body.append(svg);
   });
 };
 

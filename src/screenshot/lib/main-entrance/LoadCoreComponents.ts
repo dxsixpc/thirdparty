@@ -7,6 +7,7 @@ import saveBorderArrInfo from 'src/screenshot/lib/common-methods/SaveBorderArrIn
 import updateContainerMouseStyle from 'src/screenshot/lib/common-methods/UpdateContainerMouseStyle';
 import zoomCutOutBoxPosition from 'src/screenshot/lib/common-methods/ZoomCutOutBoxPosition';
 import type InitData from 'src/screenshot/lib/main-entrance/InitData';
+import PlugInParameters from 'src/screenshot/lib/main-entrance/PlugInParameters';
 import addHistory from 'src/screenshot/lib/split-methods/AddHistoryData';
 import calculateToolLocation from 'src/screenshot/lib/split-methods/CalculateToolLocation';
 import DrawArrow from 'src/screenshot/lib/split-methods/DrawArrow';
@@ -275,8 +276,10 @@ const h2cScreenShot = (
   triggerCallback: AnyFunction | undefined,
   screenShotDom: HTMLElement | HTMLCanvasElement | HTMLDivElement | null
 ): Promise<{ code: number; data: { canvas: HTMLCanvasElement } }> => {
+  const data = new PlugInParameters();
+  const dpr = data.getRatio();
   return new Promise((resolve, reject) => {
-    toCanvas(screenShotDom || document.body, { filter })
+    toCanvas(screenShotDom || document.body, { filter, pixelRatio: dpr })
       .then((canvas) => {
         resolve({ code: 0, data: { canvas } });
       })

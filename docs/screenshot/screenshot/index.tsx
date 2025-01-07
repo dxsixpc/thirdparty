@@ -12,6 +12,7 @@ const App: FC = () => {
     // eslint-disable-next-line no-new
     new ScreenShot({
       enableWebRtc,
+      ratio: 2,
       completeCallback: ({ base64 }) => setImgSrc(base64)
     });
   };

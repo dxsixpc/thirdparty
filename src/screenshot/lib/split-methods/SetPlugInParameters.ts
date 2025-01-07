@@ -67,6 +67,11 @@ const setPlugInParameters = (options: screenShotType) => {
   if (options?.saveImgTitle) {
     plugInParameters.setSaveImgTitle(options.saveImgTitle);
   }
+
+  // 设置截屏比率
+  if (options?.ratio) {
+    plugInParameters.setRatio(options.ratio);
+  }
 };
 
 export default setPlugInParameters;

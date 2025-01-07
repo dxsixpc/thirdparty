@@ -26,6 +26,8 @@ let imgAutoFit = false;
 
 let saveCallback: ((code: number, msg: string) => void) | null = null;
 let saveImgTitle: string | null = null;
+// 截屏比率
+let ratio: number = window.devicePixelRatio || 1;
 
 export default class PlugInParameters {
   constructor() {
@@ -46,6 +48,7 @@ export default class PlugInParameters {
       useRatioArrow = false;
       imgAutoFit = false;
       saveImgTitle = null;
+      ratio = window.devicePixelRatio || 1;
     }
   }
 
@@ -174,5 +177,13 @@ export default class PlugInParameters {
 
   public getSaveImgTitle() {
     return saveImgTitle;
+  }
+
+  public setRatio(state: number) {
+    ratio = state;
+  }
+
+  public getRatio() {
+    return ratio;
   }
 }

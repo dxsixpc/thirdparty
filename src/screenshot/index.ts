@@ -224,9 +224,6 @@ export default class ScreenShot {
     );
     if (context == null) return;
 
-    // 先画一个蒙层；
-    drawMasking(context);
-
     // 显示截图区域容器
     this.data.showScreenShotPanel();
     if (!this.plugInParameters.getWebRtcStatus()) {

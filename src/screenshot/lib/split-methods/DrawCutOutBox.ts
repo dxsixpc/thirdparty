@@ -28,8 +28,8 @@ const drawCutOutBox = (
   // 获取画布宽高
   const canvasWidth = controller?.width;
   const canvasHeight = controller?.height;
-  const dpr = window.devicePixelRatio || 1;
   const data = new PlugInParameters();
+  const dpr = data.getRatio();
 
   // 画布、图片不存在则return
   if (!canvasWidth || !canvasHeight || !imageController || !controller) return;

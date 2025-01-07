@@ -1,5 +1,5 @@
 {
-  "extends": "@zpcscc/configs/tsconfig/tsconfig.react.json",
+  "extends": "@zpcscc/configs/tsconfig/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist",
